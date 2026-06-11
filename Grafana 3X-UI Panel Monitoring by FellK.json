@@ -1,0 +1,389 @@
+{
+  "title": "3X-UI Panel Monitoring by FellK",
+  "uid": "3xui-monitoring-v2",
+  "version": 1,
+  "timezone": "browser",
+  "schemaVersion": 16,
+  "panels": [
+    {
+      "id": 1,
+      "title": "System Status",
+      "type": "row",
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 0 }
+    },
+    {
+      "id": 2,
+      "title": "CPU Usage",
+      "type": "gauge",
+      "gridPos": { "h": 8, "w": 4, "x": 0, "y": 1 },
+      "targets": [
+        {
+          "expr": "xui_system_cpu_usage_percent",
+          "legendFormat": "CPU Usage",
+          "refId": "A"
+        }
+      ],
+      "options": {
+        "showThresholdLabels": true,
+        "showThresholdMarkers": true
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "min": 0,
+          "max": 100,
+          "thresholds": {
+            "steps": [
+              { "color": "green", "value": null },
+              { "color": "yellow", "value": 70 },
+              { "color": "red", "value": 90 }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": 3,
+      "title": "Memory Usage",
+      "type": "gauge",
+      "gridPos": { "h": 8, "w": 4, "x": 4, "y": 1 },
+      "targets": [
+        {
+          "expr": "xui_system_memory_used_bytes / xui_system_memory_total_bytes * 100",
+          "legendFormat": "Memory Usage",
+          "refId": "A"
+        }
+      ],
+      "options": {
+        "showThresholdLabels": true,
+        "showThresholdMarkers": true
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "min": 0,
+          "max": 100,
+          "thresholds": {
+            "steps": [
+              { "color": "green", "value": null },
+              { "color": "yellow", "value": 75 },
+              { "color": "red", "value": 90 }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": 4,
+      "title": "Disk Usage",
+      "type": "gauge",
+      "gridPos": { "h": 8, "w": 4, "x": 8, "y": 1 },
+      "targets": [
+        {
+          "expr": "xui_system_disk_used_bytes / xui_system_disk_total_bytes * 100",
+          "legendFormat": "Disk Usage",
+          "refId": "A"
+        }
+      ],
+      "options": {
+        "showThresholdLabels": true,
+        "showThresholdMarkers": true
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "min": 0,
+          "max": 100,
+          "thresholds": {
+            "steps": [
+              { "color": "green", "value": null },
+              { "color": "yellow", "value": 75 },
+              { "color": "red", "value": 90 }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": 5,
+      "title": "Xray Status",
+      "type": "stat",
+      "gridPos": { "h": 8, "w": 4, "x": 12, "y": 1 },
+      "targets": [
+        {
+          "expr": "xui_xray_state",
+          "legendFormat": "Xray",
+          "refId": "A"
+        }
+      ],
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "center"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [
+            { "type": "value", "value": "1", "text": "RUNNING" },
+            { "type": "value", "value": "0", "text": "STOPPED" }
+          ]
+        }
+      }
+    },
+    {
+      "id": 6,
+      "title": "Total Clients",
+      "type": "stat",
+      "gridPos": { "h": 4, "w": 4, "x": 16, "y": 1 },
+      "targets": [
+        {
+          "expr": "xui_total_clients",
+          "legendFormat": "Total",
+          "refId": "A"
+        }
+      ],
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "center"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "decimals": 0
+        }
+      }
+    },
+    {
+      "id": 7,
+      "title": "Active Clients",
+      "type": "stat",
+      "gridPos": { "h": 4, "w": 4, "x": 16, "y": 5 },
+      "targets": [
+        {
+          "expr": "xui_active_clients",
+          "legendFormat": "Active",
+          "refId": "A"
+        }
+      ],
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "center"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "decimals": 0
+        }
+      }
+    },
+    {
+      "id": 8,
+      "title": "Online Clients",
+      "type": "stat",
+      "gridPos": { "h": 8, "w": 4, "x": 20, "y": 1 },
+      "targets": [
+        {
+          "expr": "xui_online_clients",
+          "legendFormat": "Online",
+          "refId": "A"
+        }
+      ],
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "center"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "decimals": 0
+        }
+      }
+    },
+    {
+      "id": 9,
+      "title": "Traffic Overview",
+      "type": "row",
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 9 }
+    },
+    {
+      "id": 10,
+      "title": "Total Traffic",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 10 },
+      "targets": [
+        {
+          "expr": "sum(xui_client_up_bytes_total) + sum(xui_client_down_bytes_total)",
+          "legendFormat": "Total Traffic",
+          "refId": "A"
+        },
+        {
+          "expr": "sum(xui_client_up_bytes_total)",
+          "legendFormat": "Upload",
+          "refId": "B"
+        },
+        {
+          "expr": "sum(xui_client_down_bytes_total)",
+          "legendFormat": "Download",
+          "refId": "C"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "bytes"
+        }
+      }
+    },
+    {
+      "id": 11,
+      "title": "Traffic by Client (Top 10)",
+      "type": "bargauge",
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 10 },
+      "targets": [
+        {
+          "expr": "topk(10, sum by(email) (xui_client_up_bytes_total + xui_client_down_bytes_total))",
+          "legendFormat": "{{email}}",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "bytes"
+        }
+      },
+      "options": {
+        "orientation": "horizontal",
+        "displayMode": "gradient"
+      }
+    },
+    {
+      "id": 12,
+      "title": "Traffic Rate",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 18 },
+      "targets": [
+        {
+          "expr": "rate(xui_client_up_bytes_total[5m])",
+          "legendFormat": "Upload Rate",
+          "refId": "A"
+        },
+        {
+          "expr": "rate(xui_client_down_bytes_total[5m])",
+          "legendFormat": "Download Rate",
+          "refId": "B"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "Bps"
+        }
+      }
+    },
+    {
+      "id": 13,
+      "title": "Traffic by Inbound",
+      "type": "piechart",
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 18 },
+      "targets": [
+        {
+          "expr": "sum by(remark) (xui_inbound_up_bytes_total + xui_inbound_down_bytes_total)",
+          "legendFormat": "{{remark}}",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "bytes"
+        }
+      },
+      "options": {
+        "pieType": "pie",
+        "displayLabels": ["name", "percent"]
+      }
+    },
+    {
+      "id": 14,
+      "title": "Online Clients",
+      "type": "table",
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 26 },
+      "targets": [
+        {
+          "expr": "xui_client_online == 1",
+          "format": "table",
+          "instant": true,
+          "legendFormat": "{{email}}",
+          "refId": "A"
+        }
+      ],
+      "options": {
+        "showHeader": true
+      }
+    },
+    {
+      "id": 15,
+      "title": "Client Traffic",
+      "type": "table",
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 26 },
+      "targets": [
+        {
+          "expr": "sum by(email) (xui_client_up_bytes_total + xui_client_down_bytes_total)",
+          "format": "table",
+          "instant": true,
+          "legendFormat": "{{email}}",
+          "refId": "A"
+        }
+      ],
+      "options": {
+        "showHeader": true
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "bytes"
+        }
+      }
+    },
+    {
+      "id": 16,
+      "title": "CPU History",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 34 },
+      "targets": [
+        {
+          "expr": "xui_system_cpu_usage_percent",
+          "legendFormat": "CPU %",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "min": 0,
+          "max": 100
+        }
+      }
+    },
+    {
+      "id": 17,
+      "title": "Memory History",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 34 },
+      "targets": [
+        {
+          "expr": "xui_system_memory_used_bytes / xui_system_memory_total_bytes * 100",
+          "legendFormat": "Memory %",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "min": 0,
+          "max": 100
+        }
+      }
+    }
+  ],
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  }
+}
