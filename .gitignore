@@ -1,0 +1,29 @@
+# Secrets and credentials
+.env
+*.pem
+*.key
+*.crt
+*_secret*
+*_token*
+*_password*
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Local config
+config.local.*
+.env.local
