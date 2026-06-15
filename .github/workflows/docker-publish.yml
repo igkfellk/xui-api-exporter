@@ -1,0 +1,48 @@
+name: Build and Publish Docker image
+
+# Запускать при пуше в основную ветку и вручную
+on:
+  push:
+    branches: [ "main", "master" ]
+  workflow_dispatch:
+
+# Права на запись пакетов
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Скачиваем код
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 2. Логинимся в ghcr.io
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      # 3. Собираем метаданные (теги, лейблы)
+      - name: Extract metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ghcr.io/${{ github.repository }}
+          tags: |
+            type=raw,value=latest
+            type=sha,prefix={{date 'YYYYMMDD'}}-,format=short
+
+      # 4. Собираем и пушим образ
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
