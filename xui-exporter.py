@@ -5,7 +5,13 @@ import logging
 import requests
 from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
-from prometheus_client import start_http_server, Counter, Gauge
+from prometheus_client import start_http_server, Counter, Gauge, disable_created_metrics
+
+# ============================================================
+# Отключение _created метрики
+# ============================================================
+
+disable_created_metrics()
 
 # ============================================================
 # Конфигурация
@@ -51,9 +57,9 @@ session.mount("https://", adapter)
 # Метрики клиентов
 # ============================================================
 
-UP_BYTES = Counter('xui_client_up_bytes_total', 'Upload bytes per client', ['email'])
-DOWN_BYTES = Counter('xui_client_down_bytes_total', 'Download bytes per client', ['email'])
-TRAFFIC_TOTAL = Counter('xui_client_traffic_total_bytes', 'Total traffic per client', ['email'])
+UP_BYTES = Counter('xui_client_up_bytes', 'Upload bytes per client', ['email'])
+DOWN_BYTES = Counter('xui_client_down_bytes', 'Download bytes per client', ['email'])
+TRAFFIC_TOTAL = Counter('xui_client_traffic_bytes', 'Total traffic per client', ['email'])
 
 ONLINE = Gauge('xui_client_online', 'Client online status (1=online, 0=offline)', ['email'])
 CLIENT_ENABLED = Gauge('xui_client_enable', 'Client enable status (1=enabled, 0=disabled)', ['email'])
@@ -70,8 +76,8 @@ CLIENT_EXPIRED = Gauge('xui_client_expired', 'Client expired status (1=expired, 
 # Метрики инбаундов
 # ============================================================
 
-INBOUND_UP = Counter('xui_inbound_up_bytes_total', 'Upload bytes per inbound', ['remark', 'protocol'])
-INBOUND_DOWN = Counter('xui_inbound_down_bytes_total', 'Download bytes per inbound', ['remark', 'protocol'])
+INBOUND_UP = Counter('xui_inbound_up_bytes', 'Upload bytes per inbound', ['remark', 'protocol'])
+INBOUND_DOWN = Counter('xui_inbound_down_bytes', 'Download bytes per inbound', ['remark', 'protocol'])
 INBOUND_ENABLE = Gauge('xui_inbound_enable', 'Inbound enable status', ['remark', 'protocol'])
 
 # ============================================================
@@ -83,8 +89,8 @@ MEMORY_USED = Gauge('xui_system_memory_used_bytes', 'Memory used in bytes')
 MEMORY_TOTAL = Gauge('xui_system_memory_total_bytes', 'Memory total in bytes')
 DISK_USED = Gauge('xui_system_disk_used_bytes', 'Disk used in bytes')
 DISK_TOTAL = Gauge('xui_system_disk_total_bytes', 'Disk total in bytes')
-NET_UP = Counter('xui_system_network_up_bytes_total', 'Network upload bytes')
-NET_DOWN = Counter('xui_system_network_down_bytes_total', 'Network download bytes')
+NET_UP = Counter('xui_system_network_up_bytes', 'Network upload bytes')
+NET_DOWN = Counter('xui_system_network_down_bytes', 'Network download bytes')
 XRAY_STATE = Gauge('xui_xray_state', 'Xray state (1=running, 0=stopped)')
 XRAY_VERSION = Gauge('xui_xray_version_info', 'Xray version info', ['version'])
 
